@@ -276,7 +276,7 @@
                             <a href="/store"> Stores</a>
                         </li>
 						<li>
-                            <a href="index.html"> Products</a>
+                            <a href="/product"> Products</a>
                         </li>
 						<li>
                             <a href="index.html"> Orders</a>
