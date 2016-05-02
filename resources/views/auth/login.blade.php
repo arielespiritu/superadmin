@@ -43,7 +43,31 @@
         <div class="container">
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
-					<div class="login-panel panel panel-default">
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+					@if (count($errors) > 0)
+						<div class="alert alert-danger" style="padding:10px;">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+						@endif
+						@if (Session::has('message'))
+						<div class="alert alert-success " style="padding:10px;">
+							<ul>
+									<li>{{ Session::get('message') }}</li>
+							</ul>
+						</div>
+					@endif
+					<div class="panel panel-default">
+					
 						<div class="panel-body">
 						<center>
 							</br>
@@ -67,6 +91,13 @@
 							</form>
 						</div>
 					</div>
+					</br>
+					</br>
+					</br>
+					</br>
+					</br>
+					</br>
+					</br>
 				</div>
 			</div>
 		</div>

@@ -3,7 +3,7 @@ function checkloginAuthentication(){
 	if (Auth::check()){
 		$id = Auth::user()->id;
 		$indicator_id = Auth::user()->indicator_id;
-		if($indicator_id=="2"){
+		if($indicator_id=="34"){
 			return 1;
 		}
 		else{

@@ -15,6 +15,8 @@ class Store extends Model
 	//public function product_info() {
     //     return $this->hasMany('App\ProductInfo','store_id','id')->with('product')->with('store')->where('product_status','=','9')->orderByRaw("RAND()");
     //}
-	
+	public function indicator() {
+         return $this->belongsTo('App\Indicator','store_status','id');
+    }
 	
 }

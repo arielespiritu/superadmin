@@ -46,7 +46,7 @@ class StoreController extends Controller {
 	{
 		$id = Auth::user()->admin_user->id;
 		$user = AdminUser::where('id','=',$id)->get();
-		$store = Store::all();
+		$store = Store::with('indicator')->get();
 		return view('admin.store')->with('user',$user)
 		->with('store',$store);
 	}	

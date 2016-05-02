@@ -92,7 +92,7 @@ class AuthController extends Controller
 			} else {
 				// create our user data for the authentication
 				$userdata = array(
-					'indicator_id' => '2',
+					'indicator_id' => '34',
 					'email'     => Input::get('email'),
 					'password'  => Input::get('password')
 				);
