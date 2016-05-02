@@ -10,8 +10,6 @@ class Store extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $table = 'store_tbl';
 	protected $primaryKey = 'id';
-
-
 	//public function product_info() {
     //     return $this->hasMany('App\ProductInfo','store_id','id')->with('product')->with('store')->where('product_status','=','9')->orderByRaw("RAND()");
     //}
