@@ -3,6 +3,7 @@
 @section('title', 'Admin Panel')
 
 @section('head')
+<link href="{{ URL::asset('assets/css/editor.css') }}" type="text/css" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -12,6 +13,7 @@
             <div class="container-fluid">
                 <div class="row">
 				<h4 class="page-header">Store Profile</h4>
+				<form class="" role="form" name="profile_form" enctype="multipart/form-data" method="POST" action="/setting/add-news" onSubmit="document.profile_form.description.value = $('#txtEditor').Editor('getText'); btn_add.disabled = true; return true;">
 					<div class="col-md-12">
 						<h4>Store Info</h4>
 						</br>
@@ -142,19 +144,16 @@
 						</br>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="col-md-2">
-									<p>Merchant Name</p>
-								</div>	
-								<div class="col-md-5">
-									<input class="form-control input-sm" name="merchant_name" id="merchant_name" type="text" placeholder="Merchant Name" value="{{$store_info[0]->store_owner->owner_name}}" required>
+									<center><p>About Store</p></center>
+									<textarea id="txtEditor" name="description">{{$store_info[0]->store_about}}</textarea> 
 									</br>
-								</div>	
 							</div>
+
 							
 						</div>
-						
-						
-					</div>					
+				
+					</div>	
+                </form>					
                 </div>
             </div>
 			<br>
@@ -165,9 +164,15 @@
 @endsection
 
 
-@section('page-script')		
+@section('page-script')	
+
+	<script src="{{ URL::asset('assets/js/editor.js') }}"></script>
 
 	<script>
+	// function clicks(){
+	// var a = $("#txtEditor").Editor('getText');
+	// alert(a);
+	// }
 	$('#city').on('change', function() {
 		//alert( this.value ); // or $(this).val()
 		var cid = this.value;
@@ -196,7 +201,10 @@
 				}
 		});
 	}
+
 	$(document).ready(function() {
+		$("#txtEditor").Editor();
+		$("#txtEditor").Editor('setText','{!! $store_info[0]->store_about !!}');
         var cid = $('#city').val();
 		var area = $('#sArea').val();
 		getArea(cid,area);
