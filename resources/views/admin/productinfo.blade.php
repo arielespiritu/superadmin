@@ -3,8 +3,6 @@
 @section('title', 'SUPERadmin | Product Information')
 
 @section('head')
-	<link href="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}" rel="stylesheet">
-	<link href="{{URL::asset('assets/bower_components/datatables-responsive/css/dataTables.responsive.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -29,6 +27,8 @@
 				</strong class="no-padding">
 				</h4>
 			</div>
+			<hr class="no-padding">
+			<br>			
 				<table width="100%" class="table table-striped table-bordered table-hover datatables" >
 					<thead>
 						<tr>
@@ -86,9 +86,4 @@
 
 
 @section('page-script')	
-<script src="{{URL::asset('assets/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>	
-<script>
-$('.datatables').DataTable();
-</script>
 @endsection

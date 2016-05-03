@@ -26,17 +26,24 @@ class ProductController extends Controller
 		return view('admin.product')->with('user',$user)
 		->with('Store',$Store);
 	}
-	function showStoreProduct(Request $request,$mode)
+	function showStoreProduct(Request $request,$store_id)
 	{
-		$store_name = getStoreName($mode);
+		$Store =Store::find($store_id);
+		if(count($Store) <= 0)
+		{
+			return redirect('/product');
+		}
+		$store_name = $Store->store_name;
 		$id = Auth::user()->admin_user->id;
+		$Store = Store::all();
 		$user = AdminUser::where('id','=',$id)->get();
-		$subcategory =subcategory::where('store_id','=',$mode)->get();
-		$Product = Product::where('store_id','=',$mode)->get();
+		$subcategory =subcategory::where('store_id','=',$store_id)->get();
+		$Product = Product::where('store_id','=',$store_id)->get();
 		return view('admin.mainproduct')->with('user',$user)
-		->with('Product',$Product)
-		->with('store_name',$store_name)
-		->with('subcategory',$subcategory);
+				->with('Product',$Product)
+				->with('Store',$Store)
+				->with('store_name',$store_name)
+				->with('subcategory',$subcategory);
 	}
 	function showProductInfo(Request $request,$mode)
 	{
@@ -49,7 +56,6 @@ class ProductController extends Controller
 				->with('mode','edit')
 				->with('store_name',$store_name)
 				->with('user',$user);
-		return $mode;
 	}
 	function showProductInfoVariants(Request $request,$mode)
 	{
@@ -64,7 +70,6 @@ class ProductController extends Controller
 				->with('mode','variants')
 				->with('store_name',$store_name)
 				->with('user',$user);	
-		return $mode;
 	}
 	
 }

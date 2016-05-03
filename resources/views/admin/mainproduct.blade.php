@@ -14,6 +14,22 @@
 			<div class="row">
 			<h4 class="page-header">Store</h4>
 			<div class="dataTable_wrapper">
+			<div class="row ">
+				<div class="col-md-6 ">
+					<div class="form-group">
+						<select class="form-control" onChange="redirectUrl(this.value)">
+						<option value="">Choose Store</option>
+							@foreach($Store as $getStoreinfo)
+								@if($store_name ==$getStoreinfo->store_name )
+									<option selected value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+								@else
+									<option value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+								@endif
+							@endforeach							
+						</select>
+					</div>
+				</div>
+			</div>			
 			<div class="alert alert-info text-center">
 				<h4 class="no-padding">
 				<strong class="no-padding">
@@ -77,5 +93,9 @@
 <script src="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $('.datatables').DataTable();
+function redirectUrl(value)
+{
+	window.location = "{{URL::asset('')}}/product/store/"+value;
+}
 </script>
 @endsection
