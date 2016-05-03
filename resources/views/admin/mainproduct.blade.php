@@ -12,8 +12,15 @@
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<div class="row">
-			<h4 class="page-header">{{$store_name}} Store</h4>
+			<h4 class="page-header">Store</h4>
 			<div class="dataTable_wrapper">
+			<div class="alert alert-info text-center">
+				<h4 class="no-padding">
+				<strong class="no-padding">
+					{{$store_name}} Store
+				</strong class="no-padding">
+				</h4>
+			</div>			
 				<table width="100%" class="table table-striped table-bordered table-hover datatables" >
 					<thead>
 						<tr>
@@ -41,10 +48,16 @@
 									@endif
 								@endforeach
 							</td>
-							<td>{{$getProductInfo->product_status}}</td>
 							<td>
-								<a href="javascript:;" class="btn btn-info btn-xs">Edit</a>
-								<a href="javascript:;" class="btn btn-success btn-xs">Variants</a>
+								@if($getProductInfo->product_status == '9')
+									ACTIVE
+								@else
+									INACTIVE
+								@endif
+							</td>
+							<td>
+								<a href="/product/{{$getProductInfo->id}}" class="btn btn-info btn-xs">Edit</a>
+								<a href="/product/variants/{{$getProductInfo->id}}" class="btn btn-success btn-xs">Variants</a>
 							</td>
 						</tr>
 					@endforeach	

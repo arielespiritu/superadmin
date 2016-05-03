@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\subcategory;
 use App\Product;
+use App\childproduct;
 use App\Store;
 class ProductController extends Controller
 {
@@ -36,6 +37,34 @@ class ProductController extends Controller
 		->with('Product',$Product)
 		->with('store_name',$store_name)
 		->with('subcategory',$subcategory);
+	}
+	function showProductInfo(Request $request,$mode)
+	{
+		$id = Auth::user()->admin_user->id;
+		$Product = Product::find($mode);
+		$store_name = getStoreName($Product->store_id);
+		$user = AdminUser::where('id','=',$id)->get();
+		return view('admin.productinfo')
+				->with('product_name',$Product->product_name)
+				->with('mode','edit')
+				->with('store_name',$store_name)
+				->with('user',$user);
+		return $mode;
+	}
+	function showProductInfoVariants(Request $request,$mode)
+	{
+		$id = Auth::user()->admin_user->id;
+		$Product = Product::find($mode);
+		$store_name = getStoreName($Product->store_id);
+		$user = AdminUser::where('id','=',$id)->get();
+		$childproduct =childproduct::where('product_info_id','=',$mode)->get();
+		return view('admin.productinfo')
+				->with('product_name',$Product->product_name)
+				->with('childproduct',$childproduct)
+				->with('mode','variants')
+				->with('store_name',$store_name)
+				->with('user',$user);	
+		return $mode;
 	}
 	
 }
