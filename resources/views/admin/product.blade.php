@@ -12,21 +12,35 @@
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<div class="row">
-			<h4 class="page-header">Select Store</h4>
-			<div class="col-md-12">
-				<div class="container-fluid">
-				@foreach($Store as $getStoreinfo)
-					<div class="col-md-3">
-					<a href="/product/store/{{$getStoreinfo->id}}">
-						<div class="alert alert-info">
-						<img src="{{URL::asset(imagePath('assets/img/logohm'))}}" class="img-thumbnail"/>
-						<h5 class="text-center"><strong>{{$getStoreinfo->store_name}}</strong></h5>
+			<h4 class="page-header">Product</h4>
+				<div class="row ">
+					<div class="col-md-6 ">
+						<div class="form-group">
+							<select class="form-control" onChange="redirectUrl(this.value)">
+							<option value="">Choose Store</option>
+								@foreach($Store as $getStoreinfo)
+										<option value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+								@endforeach							
+							</select>
 						</div>
-					</a>
 					</div>
-				@endforeach
-				</div>	
-			</div>
+				</div>
+				<hr class="no-padding">
+				<br>
+				<table width="100%" class="table table-striped table-bordered table-hover datatables" >
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th></th>
+							<th>Product name</th>
+							<th>Sub category</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>				
 		</div>
 		<br>
 		<br>
@@ -40,5 +54,9 @@
 <script src="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $('.datatables').DataTable();
+function redirectUrl(value)
+{
+	window.location = "{{URL::asset('')}}/product/store/"+value;
+}
 </script>
 @endsection
