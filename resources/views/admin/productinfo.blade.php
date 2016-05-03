@@ -14,7 +14,7 @@
 			<div class="alert alert-info text-center">
 				<h4 class="no-padding">
 				<strong class="no-padding">
-					{{$store_name}} Store
+					 Store
 				</strong class="no-padding">
 				</h4>
 			</div>
