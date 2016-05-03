@@ -44,6 +44,7 @@ class ProductController extends Controller
 		return view('admin.mainproduct')->with('user',$user)
 				->with('Product',$Product)
 				->with('Store',$Store)
+				->with('store_name',$store_name)
 				->with('subcategory',$subcategory);
 	}
 	function showProductInfo(Request $request,$mode)

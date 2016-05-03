@@ -46,12 +46,14 @@
 						</tr>
 					</thead>
 					<tbody>
+					
 					@if(count($Product)<=0)
 					@else	
 					@foreach($Product as $getProductInfo)
 						<tr class="odd gradeX">
 							<td width="2%">{{$getProductInfo->id}}</td>
-							<td width="10%"></td>
+							<td width="10%">
+							</td>
 							<td>{{$getProductInfo->product_name}}</td>
 							<td>
 								@foreach($subcategory as $getcategory)
@@ -95,7 +97,7 @@
 $('.datatables').DataTable();
 function redirectUrl(value)
 {
-	window.location = "{{URL::asset('')}}/product/store/"+value;
+	window.location = "{{URL::asset('')}}product/store/"+value;
 }
 </script>
 @endsection

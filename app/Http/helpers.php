@@ -13,6 +13,30 @@ function checkloginAuthentication(){
 		return -1;
 	}
 }
+function checkRemoteFile($url)
+{
+	$header_response = get_headers($url.'0.jpg', 1);
+	$header_response1 = get_headers($url.'0.png', 1);
+	$header_response2 = get_headers($url.'0.jpeg', 1);
+	$path="";
+	if(strpos( $header_response[0], "404" ) !== true )
+	{
+	  $path =$url.'0.jpg';
+	} 
+	elseif( strpos( $header_response1[0], "404" ) !== true )
+	{
+	  $path =$url.'0.png';
+	}
+	elseif( strpos( $header_response2[0], "404" ) !== true )
+	{
+	  $path =$url.'0.jpeg';
+	} 		
+	else 
+	{
+	   $path =$url.'0.jpg';
+	}
+	return $path;
+}
 function getProductCombo($product_id)
 {
 	$productDetails =DB::table('product_combination_tbl as product_combo')
