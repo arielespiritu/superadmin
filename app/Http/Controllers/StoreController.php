@@ -8,6 +8,7 @@ use App\User;
 use App\AdminUser;
 use App\City;
 use App\Store;
+use App\StoreOwner;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -35,9 +36,7 @@ class StoreController extends Controller {
 	{
         //$this->beforeFilter('force.ssl');
 		$this->middleware('auth');
-		
 	}
-
 	/**
 	 * Show the application dashboard to the user.
 	 *
@@ -55,7 +54,10 @@ class StoreController extends Controller {
 	{
 		$id = Auth::user()->admin_user->id;
 		$user = AdminUser::where('id','=',$id)->get();
-		$store_info = Store::with('indicator')->where('id','=',$sid)->get();
+		$store_info = Store::with('indicator')->with('store_owner')->where('id','=',$sid)->get();
+		if(count($store_info)==0){
+			return redirect('/store');
+		}
 		$city = City::all();
 		return view('admin.store-info')->with('user',$user)
 		->with('store_info',$store_info)

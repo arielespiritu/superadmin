@@ -12,27 +12,57 @@
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<div class="row">
-			<h4 class="page-header">Stores</h4>
+			<h4 class="page-header">Store</h4>
 			<div class="dataTable_wrapper">
-							<table width="100%" class="table table-striped table-bordered table-hover datatables" >
-								<thead>
-									<tr>
-										<th>Id</th>
-										<th></th>
-										<th>Product name</th>
-									</tr>
-								</thead>
-								<tbody>
-								@foreach($Product as $getProductInfo)
-									<tr class="odd gradeX">
-										<td>{{$getProductInfo->id}}</td>
-										<td></td>
-										<td>{{$getProductInfo->product_name}}</td>
-									</tr>
-								@endforeach	
-								</tbody>
-							</table>
-						</div>	
+			<div class="alert alert-info text-center">
+				<h4 class="no-padding">
+				<strong class="no-padding">
+					{{$store_name}} Store
+				</strong class="no-padding">
+				</h4>
+			</div>			
+				<table width="100%" class="table table-striped table-bordered table-hover datatables" >
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th></th>
+							<th>Product name</th>
+							<th>Sub category</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach($Product as $getProductInfo)
+						<tr class="odd gradeX">
+							<td width="2%">{{$getProductInfo->id}}</td>
+							<td width="10%"></td>
+							<td>{{$getProductInfo->product_name}}</td>
+							<td>
+								@foreach($subcategory as $getcategory)
+									@if($getcategory->id == $getProductInfo->sub_category_id )
+										{{$getcategory->sub_category_name}}
+										<?php
+											break;
+										?>
+									@endif
+								@endforeach
+							</td>
+							<td>
+								@if($getProductInfo->product_status == '9')
+									ACTIVE
+								@else
+									INACTIVE
+								@endif
+							</td>
+							<td>
+								<a href="/product/{{$getProductInfo->id}}" class="btn btn-info btn-xs">Edit</a>
+								<a href="/product/variants/{{$getProductInfo->id}}" class="btn btn-success btn-xs">Variants</a>
+							</td>
+						</tr>
+					@endforeach	
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<br>

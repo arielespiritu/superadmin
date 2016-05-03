@@ -18,15 +18,6 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="col-md-2">
-									<p>Store Logo</p>
-								</div>	
-								<div class="col-md-5">
-									<img src="{{ URL::asset('assets/account/default.png') }}" class="img-responsive" id="store_logo" style="border:1px solid gray; height:100px; width:300px;"/>
-									</br>
-								</div>	
-							</div>
-							<div class="col-md-12">
-								<div class="col-md-2">
 									<p>Store Name</p>
 								</div>	
 								<div class="col-md-5">
@@ -89,6 +80,7 @@
 									<p>Store City</p>
 								</div>	
 								<div class="col-md-5">
+								<input  id="sArea" type="hidden"  value="{{$store_info[0]->store_area}}" >
 									<select class="form-control input-sm " id="area" name="area" value="" required>
 										<option></option>
 									</select>
@@ -96,6 +88,72 @@
 								</div>	
 							</div>
 						</div>
+						<h4>Merchant Info</h4>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Merchant Name</p>
+								</div>	
+								<div class="col-md-5">
+									<input class="form-control input-sm" name="merchant_name" id="merchant_name" type="text" placeholder="Merchant Name" value="{{$store_info[0]->store_owner->owner_name}}" required>
+									</br>
+								</div>	
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Merchant Nick Name</p>
+								</div>	
+								<div class="col-md-5">
+									<input class="form-control input-sm" name="merchant_nick_name" id="merchant_nick_name" type="text" placeholder="Nick Name" value="{{$store_info[0]->store_owner->owner_nick_name}}" required>
+									</br>
+								</div>	
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Email</p>
+								</div>	
+								<div class="col-md-5">
+									<input class="form-control input-sm" name="email" id="email" type="text" placeholder="Email" value="{{$store_info[0]->store_owner->owner_email}}" required>
+									</br>
+								</div>	
+							</div>
+
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Mobile No</p>
+								</div>	
+								<div class="col-md-5">
+									<input class="form-control input-sm" name="mobile_no" id="mobile_no" type="text" placeholder="Mobile Number" value="{{$store_info[0]->store_owner->owner_mobile}}" required>
+									</br>
+								</div>	
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Store Address</p>
+								</div>	
+								<div class="col-md-5">
+									<textarea rows="4" class="form-control input-sm  " placeholder="Store Address" name="store_address" required>{{$store_info[0]->store_complete_address}}</textarea>
+									</br>
+								</div>	
+							</div>
+						</div>
+						<h4>Other Info</h4>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="col-md-2">
+									<p>Merchant Name</p>
+								</div>	
+								<div class="col-md-5">
+									<input class="form-control input-sm" name="merchant_name" id="merchant_name" type="text" placeholder="Merchant Name" value="{{$store_info[0]->store_owner->owner_name}}" required>
+									</br>
+								</div>	
+							</div>
+							
+						</div>
+						
+						
 					</div>					
                 </div>
             </div>
@@ -113,10 +171,11 @@
 	$('#city').on('change', function() {
 		//alert( this.value ); // or $(this).val()
 		var cid = this.value;
-		getArea(cid);
+		var area = $('#sArea').val();
+		getArea(cid,area);
 	});
 	
-	function getArea(cid){
+	function getArea(cid,area){
 		$.ajax({
 				type: "GET",
 				url: "/location/get-city-area?cid="+cid,
@@ -125,7 +184,11 @@
 					$('#area').empty();
 					$('#area').append('<option value="0">Select City</option>');
 					for(x=0;x<data.data.length;x++){
-						$('#area').append('<option value="'+data.data[x].id+'">'+data.data[x].major_area+'</option>');
+						if(data.data[x].id==area){
+							$('#area').append('<option selected value="'+data.data[x].id+'">'+data.data[x].major_area+'</option>');
+						}else{
+							$('#area').append('<option value="'+data.data[x].id+'">'+data.data[x].major_area+'</option>');
+						}
 					}	
 				},
 				error: function(data) {
@@ -133,6 +196,11 @@
 				}
 		});
 	}
+	$(document).ready(function() {
+        var cid = $('#city').val();
+		var area = $('#sArea').val();
+		getArea(cid,area);
+    });
 
     </script>
 @endsection
