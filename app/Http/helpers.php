@@ -14,7 +14,24 @@ function checkloginAuthentication(){
 	}
 }
 
-function test(){
-return 'test';
+function getStoreName($store_id)
+{
+	$storeinfo= DB::table('store_tbl')->where('id','=',$store_id)->get();
+	DB::disconnect();
+	return $storeinfo[0]->store_name;
+}
+function imagePath($path)
+{
+	if(file_exists($path.'.png')){
+		return $path.'.png';
+	}elseif(file_exists($path.'.jpg')){
+		return $path.'.jpg';
+	}
+	elseif(file_exists($path.'.jpeg')){
+		return $path.'.jpeg';
+	}	
+	else{
+		return 'assets/img/nobanner.png';
+	}
 }
 ?>

@@ -18,5 +18,10 @@ Route::get('/auth/logout', array('as' => 'logout','uses' => 'Auth\AuthController
 
 Route::get('/product','ProductController@showProduct');
 
+Route::get('/product/store/{id}','ProductController@showStoreProduct');
+
+Route::get('/product/store', function () {
+    return Redirect::to('/product');
+});
 Route::get('/store', array('as' => 'logout','uses' => 'StoreController@getStores'));
 Route::get('/', array('as' => 'logout','uses' => 'DashboardController@getDashboard'));
