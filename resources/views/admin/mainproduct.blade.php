@@ -20,8 +20,12 @@
 						<select class="form-control" onChange="redirectUrl(this.value)">
 						<option value="">Choose Store</option>
 							@foreach($Store as $getStoreinfo)
-								@if($store_name ==$getStoreinfo->store_name )
-									<option selected value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+								@if(isset($store_name))
+									@if($store_name ==$getStoreinfo->store_name )
+										<option selected value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+									@else
+										<option value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
+									@endif
 								@else
 									<option value="{{$getStoreinfo->id}}">{{$getStoreinfo->store_name}}</option>
 								@endif
@@ -29,13 +33,6 @@
 						</select>
 					</div>
 				</div>
-			</div>			
-			<div class="alert alert-info text-center">
-				<h4 class="no-padding">
-				<strong class="no-padding">
-					{{$store_name}} Store
-				</strong class="no-padding">
-				</h4>
 			</div>			
 				<table width="100%" class="table table-striped table-bordered table-hover datatables" >
 					<thead>
@@ -49,6 +46,8 @@
 						</tr>
 					</thead>
 					<tbody>
+					@if(count($Product)<=0)
+					@else	
 					@foreach($Product as $getProductInfo)
 						<tr class="odd gradeX">
 							<td width="2%">{{$getProductInfo->id}}</td>
@@ -77,6 +76,7 @@
 							</td>
 						</tr>
 					@endforeach	
+					@endif	
 					</tbody>
 				</table>
 			</div>

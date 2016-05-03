@@ -23,8 +23,10 @@ class ProductController extends Controller
 		$id = Auth::user()->admin_user->id;
 		$user = AdminUser::where('id','=',$id)->get();
 		$Store = Store::all();
-		return view('admin.product')->with('user',$user)
-		->with('Store',$Store);
+		return view('admin.mainproduct')->with('user',$user)
+				->with('Product',null)
+				->with('Store',$Store)
+				->with('subcategory',null);
 	}
 	function showStoreProduct(Request $request,$store_id)
 	{
@@ -42,7 +44,6 @@ class ProductController extends Controller
 		return view('admin.mainproduct')->with('user',$user)
 				->with('Product',$Product)
 				->with('Store',$Store)
-				->with('store_name',$store_name)
 				->with('subcategory',$subcategory);
 	}
 	function showProductInfo(Request $request,$mode)
