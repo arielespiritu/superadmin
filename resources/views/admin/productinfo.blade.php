@@ -6,6 +6,39 @@
 @endsection
 
 @section('content')
+<style>
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 2px;
+    background: black;
+}
+
+.strike > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > span:after {
+    left: 100%;
+    margin-left: 15px;
+}
+</style>
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			<div class="row">
@@ -17,6 +50,146 @@
 					{{$store_name}} Store
 				</strong class="no-padding">
 				</h4>
+			</div>	
+			<div class="col-md-12">
+				<div class="strike">
+				   <span><b>MAIN PRODUCT INFORMATION</b></span>
+				</div>				
+				<br>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Product Name:</label>
+							<input class="form-control" value="{{$product_info->product_name}}" name="product_name">
+						</div>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Market:</label>
+							<select class="form-control" name="active_price">
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Category:</label>
+							<select class="form-control" name="active_price">
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Sub Category:</label>
+							<select class="form-control" name="active_price">
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Brand:</label>
+							<select class="form-control" name="active_price">
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Product Status:</label>
+							<select class="form-control" name="active_price">
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+
+				</div>				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Embed Video Link:</label>
+							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" rows="2" name="product_embed_link">{{$product_info->product_embed_link}}</textarea>
+						</div>						
+					</div>					
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Product Ranged:</label>
+							<textarea class="form-control" style="resize:none" name="product_range" placeholder="Paste here the embeded link" rows="2">{{$product_info->product_range}}</textarea>
+						</div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Tags:</label>
+							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" name="tags" rows="2"></textarea>
+						</div>						
+					</div>						
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Product description:</label>
+							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" rows="12"></textarea>
+						</div>						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-success btn-lg pull-right">Update Information</button>
+					</div>
+				</div>				
+				<br>
+				<br>
+				<div class="strike">
+				   <span><b>PRODUCT VARIANTS DESCRIPTION</b></span>
+				</div>	
+				<br>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" name="">
+								<option  value="">Choose Variant Type</option>
+								<option  value="8">RETAIL PRICE</option>
+								<option  value="9">SALE PRICE</option>
+							</select>
+						</div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="form-control" placeholder="Variant Name">
+						</div>						
+					</div>					
+					<div class="col-md-3">
+						<div class="form-group">
+							<button class="btn btn-primary btn-sm btn-block">Add</button>
+						</div>						
+					</div>	
+					<div class="col-md-12  table-striped">
+					<hr>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>DESCRIPTION TYPE</th>
+									<th>DESCRIPTION VALUE</th>
+								</tr>
+							</thead>	
+							<tbody>	
+							
+							</tbody>	
+						</table>
+					</div>
+				</div>					
 			</div>
 			@elseif($mode =='variants')
 			<h4 class="page-header">{{$product_info->product_name}} <b class="small">Variants</b></h4>

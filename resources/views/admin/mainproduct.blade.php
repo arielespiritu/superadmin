@@ -41,6 +41,7 @@
 							<th>Product name</th>
 							<th>Sub category</th>
 							<th>Status</th>
+							<th>Date Created</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -69,6 +70,7 @@
 									INACTIVE
 								@endif
 							</td>
+							<td>{{smartdate(strtotime($getProductInfo->created_at))}}</td>
 							<td>
 								<a href="/product/{{$getProductInfo->id}}" class="btn btn-info btn-xs">Edit</a>
 								<a href="/product/variants/{{$getProductInfo->id}}" class="btn btn-success btn-xs">Variants</a>

@@ -44,6 +44,7 @@ class ProductController extends Controller
 		$user = AdminUser::where('id','=',$id)->get();
 		$subcategory =subcategory::where('store_id','=',$store_id)->get();
 		$Product = Product::where('store_id','=',$store_id)->get();
+		// return $Product;
 		return view('admin.mainproduct')->with('user',$user)
 				->with('Product',$Product)
 				->with('Store',$Store)
@@ -57,7 +58,7 @@ class ProductController extends Controller
 		$store_name = getStoreName($Product->store_id);
 		$user = AdminUser::where('id','=',$id)->get();
 		return view('admin.productinfo')
-				->with('product_name',$Product->product_name)
+				->with('product_info',$Product)
 				->with('mode','edit')
 				->with('store_name',$store_name)
 				->with('user',$user);
