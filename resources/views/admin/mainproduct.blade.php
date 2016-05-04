@@ -38,7 +38,6 @@
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th></th>
 							<th>Product name</th>
 							<th>Sub category</th>
 							<th>Status</th>
@@ -48,12 +47,10 @@
 					<tbody>
 					
 					@if(count($Product)<=0)
-					@else	
+					@else
 					@foreach($Product as $getProductInfo)
 						<tr class="odd gradeX">
 							<td width="2%">{{$getProductInfo->id}}</td>
-							<td width="10%">
-							</td>
 							<td>{{$getProductInfo->product_name}}</td>
 							<td>
 								@foreach($subcategory as $getcategory)
@@ -88,8 +85,6 @@
 		<br>
 	</div>
 @endsection
-
-
 @section('page-script')		
 <script src="{{URL::asset('assets/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>

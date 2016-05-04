@@ -29,6 +29,7 @@ Route::get('/product','ProductController@showProduct');
 
 Route::get('/product/{id}','ProductController@showProductInfo');
 Route::get('/product/variants/{id}','ProductController@showProductInfoVariants');
+Route::get('/product/variants/{id}/{id1}','ProductController@showProductInfoEditVariants');
 
 Route::get('/product/store/{id}','ProductController@showStoreProduct');
 
