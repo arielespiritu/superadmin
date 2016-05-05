@@ -45,6 +45,96 @@ function getProductCombo($product_id)
 					 DB::disconnect();
 	return $productDetails;
 }
+function getProductType($variantsArray)
+{
+	$checkProductType= "";
+	$array = array();
+	foreach($variantsArray as $getProductChild)
+	{
+		foreach($getProductChild->getCombo as $getUsedCombo)
+		{
+			$variant_use = $getUsedCombo->getProductVariant->getVariant->variant_name;
+			if($variant_use == 'MAIN' )
+			{
+				if (in_array('MAIN', $array)) {
+				}
+				else
+				{
+					array_push($array,'MAIN');
+				}
+				$checkProductType = 'Main Product';
+			}
+			elseif($variant_use != 'MAIN')
+			{
+				if (in_array('VARIANTS',$array)) {
+				}
+				else
+				{
+					array_push($array,'VARIANTS');
+				}
+				$checkProductType = 'Product With Variants';
+			}
+			if(count($array) > 1)
+			{
+				$checkProductType="Conflict product has main and variants";
+				break;
+			}			
+		}			
+	}
+	return $checkProductType;
+}
+function checkIfVariantDescriptionNoteUse($productArray,$variants_list)
+{
+	$settedVariants=array();
+	$usedVariants=array();
+	$variant_description= array();
+	$variant_value=array();
+	$array_result=array();
+
+	foreach($variants_list as $getAllSetVariants)
+	{
+		if(isset($getAllSetVariants->id))
+		{
+			array_push($settedVariants,$getAllSetVariants->id);
+			array_push($variant_description,getVariantName($getAllSetVariants->variant_id));
+			array_push($variant_value,$getAllSetVariants->variant_name_value);
+		}
+	}
+	foreach($productArray as $getProductChild)
+	{
+		foreach($getProductChild->getCombo as $getProductVariant)
+		{
+			 array_push($usedVariants,$getProductVariant->product_variant_id);
+			
+		}
+	}
+	$comparingResult =array_diff($settedVariants,$usedVariants);
+	foreach($comparingResult as $key => $item)
+	{
+		array_push($array_result,$variant_description[$key].': '.$variant_value[$key]);
+	}
+	if(count($array_result) <=0)
+	{
+		return 'false';
+	}
+	else
+	{
+		return implode(',',$array_result).' NOT USE';
+	}
+	
+}
+function getVariantName($variant_id)
+{
+	$variant = DB::table('variant_tbl')->where('id','=',$variant_id)->get();
+	if(count($variant) <=0)
+	{
+		return 'Variant Description Not Define';
+	}
+	else
+	{
+		return $variant[0]->variant_name;
+	}
+}
 function grammar_date($val, $sentence) {
 	if ($val > 1) {
 		return $val.str_replace('(s)', 's', $sentence);

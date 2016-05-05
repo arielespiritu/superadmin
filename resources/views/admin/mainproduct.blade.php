@@ -39,7 +39,7 @@
 						<tr>
 							<th>Id</th>
 							<th>Product name</th>
-							<th>Sub category</th>
+							<th>Product Issues</th>
 							<th>Status</th>
 							<th>Date Created</th>
 							<th></th>
@@ -51,17 +51,47 @@
 					@else
 					@foreach($Product as $getProductInfo)
 						<tr class="odd gradeX">
-							<td width="2%">{{$getProductInfo->id}}</td>
+							<td width="2%" >{{$getProductInfo->id}}</td>
 							<td>{{$getProductInfo->product_name}}</td>
 							<td>
-								@foreach($subcategory as $getcategory)
-									@if($getcategory->id == $getProductInfo->sub_category_id )
-										{{$getcategory->sub_category_name}}
-										<?php
+								<?php
+								$errors = array();
+								$checkifHasCategory="false";
+								$checkifVariantUse = checkIfVariantDescriptionNoteUse($getProductInfo->getChildProduct,$getProductInfo->getVariantsInfo);
+
+								foreach($subcategory as $getcategory)
+								{
+									if($getcategory->id == $getProductInfo->sub_category_id )
+									{
+										$checkifHasCategory="true";
 											break;
-										?>
-									@endif
-								@endforeach
+									}
+								}								
+								if($checkifHasCategory == 'false')
+								{
+									array_push($errors,'Category Not Define');
+								}
+								if($getProductInfo->sub_category_id == '')
+								{
+									array_push($errors,'Sub Category Not Define');
+								}
+								if($checkifVariantUse != 'false')
+								{
+									array_push($errors,$checkifVariantUse);
+								}
+
+								?>
+
+								@if(count($errors) <= '0')
+									<b>No Problem</b>
+								@else
+									<b>Problem/s:</b> {{implode (", ", $errors)}}
+								@endif
+								<br>
+								<b>Type:</b> {{getProductType($getProductInfo->getChildProduct)}}
+								<br>
+								<b>Last Update:</b> {{smartdate(strtotime($getProductInfo->updated_at))}}
+								
 							</td>
 							<td>
 								@if($getProductInfo->product_status == '9')

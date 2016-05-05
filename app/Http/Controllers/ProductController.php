@@ -43,8 +43,7 @@ class ProductController extends Controller
 		$Store = Store::all();
 		$user = AdminUser::where('id','=',$id)->get();
 		$subcategory =subcategory::where('store_id','=',$store_id)->get();
-		$Product = Product::where('store_id','=',$store_id)->get();
-		// return $Product;
+		$Product = Product::where('store_id','=',$store_id)->with('getVariantsInfo')->with('getChildProduct')->get();
 		return view('admin.mainproduct')->with('user',$user)
 				->with('Product',$Product)
 				->with('Store',$Store)
