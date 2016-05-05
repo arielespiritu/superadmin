@@ -105,7 +105,6 @@ function checkIfVariantDescriptionNoteUse($productArray,$variants_list)
 		foreach($getProductChild->getCombo as $getProductVariant)
 		{
 			 array_push($usedVariants,$getProductVariant->product_variant_id);
-			
 		}
 	}
 	$comparingResult =array_diff($settedVariants,$usedVariants);
@@ -121,7 +120,6 @@ function checkIfVariantDescriptionNoteUse($productArray,$variants_list)
 	{
 		return implode(',',$array_result).' NOT USE';
 	}
-	
 }
 function getVariantName($variant_id)
 {
