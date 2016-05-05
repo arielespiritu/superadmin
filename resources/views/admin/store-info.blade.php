@@ -148,8 +148,6 @@
 									<textarea id="txtEditor" name="description">{{$store_info[0]->store_about}}</textarea> 
 									</br>
 							</div>
-
-							
 						</div>
 				
 					</div>	

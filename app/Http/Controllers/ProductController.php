@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use App\subcategory;
 use App\Product;
 use App\childproduct;
+use App\Basevariants;
+use App\Variantscombo;
+use App\Variants;
 use App\Store;
 class ProductController extends Controller
 {
@@ -41,9 +44,11 @@ class ProductController extends Controller
 		$user = AdminUser::where('id','=',$id)->get();
 		$subcategory =subcategory::where('store_id','=',$store_id)->get();
 		$Product = Product::where('store_id','=',$store_id)->get();
+		// return $Product;
 		return view('admin.mainproduct')->with('user',$user)
 				->with('Product',$Product)
 				->with('Store',$Store)
+				->with('store_name',$store_name)
 				->with('subcategory',$subcategory);
 	}
 	function showProductInfo(Request $request,$mode)
@@ -53,7 +58,7 @@ class ProductController extends Controller
 		$store_name = getStoreName($Product->store_id);
 		$user = AdminUser::where('id','=',$id)->get();
 		return view('admin.productinfo')
-				->with('product_name',$Product->product_name)
+				->with('product_info',$Product)
 				->with('mode','edit')
 				->with('store_name',$store_name)
 				->with('user',$user);
@@ -62,15 +67,43 @@ class ProductController extends Controller
 	{
 		$id = Auth::user()->admin_user->id;
 		$Product = Product::find($mode);
+		if(count($Product) <= 0)
+		{
+			return redirect('/product/');
+		}	
 		$store_name = getStoreName($Product->store_id);
 		$user = AdminUser::where('id','=',$id)->get();
-		$childproduct =childproduct::where('product_info_id','=',$mode)->get();
+		$childproduct =childproduct::where('product_info_id','=',$mode)->get();		
 		return view('admin.productinfo')
-				->with('product_name',$Product->product_name)
+				->with('product_info',$Product)
 				->with('childproduct',$childproduct)
 				->with('mode','variants')
 				->with('store_name',$store_name)
 				->with('user',$user);	
 	}
-	
+	function showProductInfoEditVariants(Request $request,$product_id,$product_variant_id)
+	{
+		$id = Auth::user()->admin_user->id;
+		$Product = Product::find($product_id);
+		if(count($Product) <= 0)
+		{
+			return redirect('/product/');
+		}
+		$childproduct =childproduct::where('id','=',$product_variant_id)->with('getCombo')->get();
+		
+		if(count($childproduct) <= 0)
+		{
+			return redirect('/product/variants/'.$Product->id);
+		}		
+		$Variants = Variants::where('product_info_id','=', $product_id)->with('getVariant')->get();
+		$store_name = getStoreName($Product->store_id);
+		$user = AdminUser::where('id','=',$id)->get();
+		return view('admin.productinfo')
+				->with('product_info',$Product)
+				->with('childproduct',$childproduct)
+				->with('variant',$Variants)
+				->with('mode','edit-variants')
+				->with('store_name',$store_name)
+				->with('user',$user);	
+	}	
 }

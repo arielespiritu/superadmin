@@ -38,20 +38,20 @@
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th></th>
 							<th>Product name</th>
 							<th>Sub category</th>
 							<th>Status</th>
+							<th>Date Created</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
+					
 					@if(count($Product)<=0)
-					@else	
+					@else
 					@foreach($Product as $getProductInfo)
 						<tr class="odd gradeX">
 							<td width="2%">{{$getProductInfo->id}}</td>
-							<td width="10%"></td>
 							<td>{{$getProductInfo->product_name}}</td>
 							<td>
 								@foreach($subcategory as $getcategory)
@@ -70,6 +70,7 @@
 									INACTIVE
 								@endif
 							</td>
+							<td>{{smartdate(strtotime($getProductInfo->created_at))}}</td>
 							<td>
 								<a href="/product/{{$getProductInfo->id}}" class="btn btn-info btn-xs">Edit</a>
 								<a href="/product/variants/{{$getProductInfo->id}}" class="btn btn-success btn-xs">Variants</a>
@@ -86,8 +87,6 @@
 		<br>
 	</div>
 @endsection
-
-
 @section('page-script')		
 <script src="{{URL::asset('assets/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
