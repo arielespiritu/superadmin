@@ -6,15 +6,14 @@ use Session;
 use Crypt;
 use App\User;
 use App\AdminUser;
-use App\City;
+use App\Area;
 use App\Store;
-use App\StoreOwner;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 
-class StoreController extends Controller {
+class GenericRequestController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -36,32 +35,34 @@ class StoreController extends Controller {
 	{
         //$this->beforeFilter('force.ssl');
 		$this->middleware('auth');
+		
 	}
+
 	/**
 	 * Show the application dashboard to the user.
 	 *
 	 * @return Response
-	 */
-	public function getStores()
+	 */	
+	public function getArea(Request $request)
 	{
-		$id = Auth::user()->admin_user->id;
-		$user = AdminUser::where('id','=',$id)->get();
-		$store = Store::with('indicator')->get();
-		return view('admin.store')->with('user',$user)
-		->with('store',$store);
-	}	
-	public function getStoresInfo($sid)
-	{
-		$id = Auth::user()->admin_user->id;
-		$user = AdminUser::where('id','=',$id)->get();
-		$store_info = Store::with('indicator')->with('store_owner')->where('id','=',$sid)->get();
-		if(count($store_info)==0){
-			return redirect('/store');
+		if ($request->ajax()) {
+			try{
+					$input = $request->all();
+					$city_id = $input['cid'];
+					$area = Area::where('city','=',$city_id)->get();
+					return Response::json(array(
+						'success' => true,
+						'message' => 'Retrieve Success',
+						'data' => $area 
+					)); 
+			}catch(\Exception $e){
+					return Response::json(array(
+						'success' => false,
+						'message' => 'Retrieve Failed',
+						'data' => null 
+					)); 
+			}
 		}
-		$city = City::all();
-		return view('admin.store-info')->with('user',$user)
-		->with('store_info',$store_info)
-		->with('city',$city);
-	}	
 	
+	}
 }

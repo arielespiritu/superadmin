@@ -202,4 +202,19 @@ function imagePath($path)
 		return 'assets/img/nobanner.png';
 	}
 }
+
+function getStoreLogo($path)
+{
+	if(file_exists($path.'.png')){
+		return $path.'.png';
+	}elseif(file_exists($path.'.jpg')){
+		return $path.'.jpg';
+	}
+	elseif(file_exists($path.'.jpeg')){
+		return $path.'.jpeg';
+	}	
+	else{
+		return 'assets/img/nobanner.png';
+	}
+}
 ?>

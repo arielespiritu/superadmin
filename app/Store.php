@@ -16,5 +16,8 @@ class Store extends Model
 	public function indicator() {
          return $this->belongsTo('App\Indicator','store_status','id');
     }
+	public function store_owner() {
+         return $this->hasOne('App\StoreOwner','store_id','id');
+    }
 	
 }
