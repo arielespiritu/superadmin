@@ -36,7 +36,7 @@
 											<td>{{$store_info->created_at}}</td>
 											<td>{{$store_info->indicator->indicator_name}}</td>
 											<td>
-											<a href="" class="btn btn-default btn-xs" data-toggle="tooltip" title="View Products"><i class="fa fa-tag" aria-hidden="true"></i></a>
+											<a href="/product/store/{{$store_info->id}}" class="btn btn-default btn-xs" data-toggle="tooltip" title="View Products"><i class="fa fa-tag" aria-hidden="true"></i></a>
 											<a href="" class="btn btn-default btn-xs" data-toggle="tooltip" title="View Orders"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
 											<a href="" class="btn btn-default btn-xs" data-toggle="tooltip" title="Collections"><i class="fa fa-money" aria-hidden="true"></i></a>
 											<a href="/store/{{$store_info->id}}" class="btn btn-default btn-xs" data-toggle="tooltip" title="Store Profile"><i class="fa fa-eye" aria-hidden="true"></i></a>

@@ -95,7 +95,7 @@
 $('.datatables').DataTable();
 function redirectUrl(value)
 {
-	window.location = "{{URL::asset('')}}/product/store/"+value;
+	window.location = "{{URL::asset('')}}product/store/"+value;
 }
 </script>
 @endsection
