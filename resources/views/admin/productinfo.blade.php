@@ -3,6 +3,7 @@
 @section('title', 'SUPERadmin | Product Information')
 
 @section('head')
+	<link href="{{URL::asset('assets/dist/css/bootstrap-tagsinput.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -60,35 +61,86 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Product Name:</label>
-							<input class="form-control" value="{{$product_info->product_name}}" name="product_name">
+							<input class="form-control" readonly value="{{$product_info->product_name}}" name="product_name">
 						</div>			
 					</div>
 				</div>
+				<?php
+					$market_id="";
+					$category_id="";
+					$sub_category_id=$product_info->sub_category_id;
+					foreach($subcategory as $getSub)
+					{
+						if($getSub->id  == $sub_category_id)
+						{
+							$category_id = $getSub->category_id;
+							foreach($category as $getCat)
+							{
+								if($getCat->id == $category_id)
+								{
+									$market_id =$getCat->market_id;
+									break;
+								}
+							}
+						}
+						
+						if($market_id == '' && $category_id == '')
+						{
+							continue;
+						}
+						else
+						{
+							break;
+						}
+					}
+				?>
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<label>Market:</label>
-							<select class="form-control" name="active_price">
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+							<label>Market: </label>
+							<select class="form-control" readonly name="market">
+										<option  value="">Choose market</option>
+								@foreach($Market as $getMarket)
+									@if($getMarket->id == $market_id)
+										<option selected  value="{{$getMarket->id}}">{{$getMarket->market_name}}</option>
+									@else
+										<option  value="{{$getMarket->id}}">{{$getMarket->market_name}}</option>
+									@endif
+								@endforeach
 							</select>
 						</div>						
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label>Category:</label>
-							<select class="form-control" name="active_price">
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+							<select class="form-control" readonly name="category">
+									<option  value="">Choose Category</option>
+								@foreach($category as $getCategory)
+									@if($market_id == $getCategory->market_id)
+										@if($category_id == $getCategory->id )
+											<option selected value="{{$getCategory->id}}">{{$getCategory->category_name}}</option>
+										@else
+											<option  value="{{$getCategory->id}}">{{$getCategory->category_name}}</option>	
+										@endif	
+									@endif	
+								@endforeach
 							</select>
 						</div>						
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label>Sub Category:</label>
-							<select class="form-control" name="active_price">
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+							<select class="form-control" readonly name="sub_category">
+									<option  value="">Choose Sub Category</option>
+								@foreach($subcategory as $getSubcategory)
+									@if($category_id == $getSubcategory->category_id)
+										@if($sub_category_id == $getSubcategory->id)
+											<option selected value="{{$getSubcategory->id}}">{{$getSubcategory->sub_category_name}}</option>
+										@else
+											<option value="{{$getSubcategory->id}}">{{$getSubcategory->sub_category_name}}</option>
+										@endif
+									@endif	
+								@endforeach
 							</select>
 						</div>						
 					</div>
@@ -97,18 +149,30 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Brand:</label>
-							<select class="form-control" name="active_price">
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+							<select class="form-control " readonly name="active_price">
+								<option  value="">Choose Brand</option>
+								@foreach($brand as $getBrand)
+									@if($getBrand->market_id == $market_id)
+										<option selected value="{{$getBrand->id}}">{{$getBrand->brand_name}}</option>
+									@else
+										<option  value="{{$getBrand->id}}">{{$getBrand->brand_name}}</option>
+									@endif
+								@endforeach
 							</select>
 						</div>						
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Product Status:</label>
-							<select class="form-control" name="active_price">
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+							<select class="form-control" readonly name="active_price">
+								@if($product_info->product_status == '9')
+									<option selected value="9">PUBLISH</option>
+								@elseif($product_info->product_status == '10')
+									<option selected value="10">NOT PUBLISH</option>
+								@else
+									<option  value="9">PUBLISH</option>
+									<option  value="10">NOT PUBLISH</option>									
+								@endif
 							</select>
 						</div>						
 					</div>
@@ -118,7 +182,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Embed Video Link:</label>
-							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" rows="2" name="product_embed_link">{{$product_info->product_embed_link}}</textarea>
+							<textarea class="form-control" readonly style="resize:none" placeholder="Paste here the embeded link" rows="2" name="product_embed_link">{{$product_info->product_embed_link}}</textarea>
 						</div>						
 					</div>					
 				</div>
@@ -126,13 +190,24 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Product Ranged:</label>
-							<textarea class="form-control" style="resize:none" name="product_range" placeholder="Paste here the embeded link" rows="2">{{$product_info->product_range}}</textarea>
+							<textarea class="form-control" readonly style="resize:none" name="product_range" placeholder="Paste here the embeded link" rows="2">{{$product_info->product_range}}</textarea>
 						</div>						
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label>Tags:</label>
-							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" name="tags" rows="2"></textarea>
+							<label>Tags:</label><br>
+							<?php 
+								$tags=array();
+							?>
+							@if(count($Tags) > 0)
+							<?php
+								foreach($Tags as $getTags)
+								{
+									array_push($tags,$getTags->tag_description);
+								}
+							?>						
+							@endif	
+							<input data-role="tagsinput" readonly class="input input-lg" style="resize:none" value="{{implode(',',$tags)}}"  placeholder="tags" name="tags"/>
 						</div>						
 					</div>						
 				</div>
@@ -140,7 +215,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Product description:</label>
-							<textarea class="form-control" style="resize:none" placeholder="Paste here the embeded link" rows="12"></textarea>
+							<textarea class="form-control" readonly style="resize:none" placeholder="Paste here the embeded link" rows="12"></textarea>
 						</div>						
 					</div>
 				</div>
@@ -158,16 +233,21 @@
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
-							<select class="form-control" name="">
+						<form id="myForm">
+							<select readonly class="form-control" onChange="Variants(this.value,'{{$product_info->id}}')" id="variant_type" name="variant_type">
 								<option  value="">Choose Variant Type</option>
-								<option  value="8">RETAIL PRICE</option>
-								<option  value="9">SALE PRICE</option>
+								@foreach($variants as $getVariants)
+									@if($getVariants->market_id == $market_id)
+									<option  value="{{$getVariants->id}}">{{$getVariants->variant_name}}</option>
+									@endif
+								@endforeach
 							</select>
-						</div>						
+						</div>
+						</form>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" placeholder="Variant Name">
+							<input class="form-control" readonly placeholder="Variant Name">
 						</div>						
 					</div>					
 					<div class="col-md-3">
@@ -177,17 +257,24 @@
 					</div>	
 					<div class="col-md-12  table-striped">
 					<hr>
-						<table class="table">
+						<table class="table" id="variant_table">
 							<thead>
 								<tr>
 									<th>DESCRIPTION TYPE</th>
 									<th>DESCRIPTION VALUE</th>
+									<th width="2%"></th>
 								</tr>
 							</thead>	
 							<tbody>	
 							
 							</tbody>	
 						</table>
+						<hr>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
 					</div>
 				</div>					
 			</div>
@@ -374,7 +461,7 @@
 				</div>
 				<div class="col-md-12">
 					<input id="select_values" style="display:none"  value=<?php echo $variants; ?>  />
-					<input id="product_variant_combination" style="display:none"  value="{{$childproduct[0]->getCombo}}"  />				
+					<input id="product_variant_combination" style="display:none"  value="{{$childproduct[0]->getCombo}}"/>
 					<button class="btn btn-primary btn-lg pull-right">Update Variants</button>
 				</div>
 			</div>
@@ -387,6 +474,7 @@
 @endsection
 
 @section('page-script')	
+<script src="{{URL::asset('assets/dist/js/bootstrap-tagsinput.js')}}"></script>
 <script>
 var getCount =document.getElementById('select_values').value;
 var getCombo =document.getElementById('product_variant_combination').value;
@@ -405,6 +493,44 @@ function dynamicChosen(arrayKeys,nameKey,jsonSelected)
 			}
 		}
 	}
+}
+function Variants(vKey,pKey)
+{
+	var formData = new FormData();
+	formData.append('vKey',vKey);
+	formData.append('pKey',pKey);
+	var selected = $("#variant_type option[value='"+vKey+"']").text();
+	var toJSON ="";
+	$.ajax({
+		type: "POST",
+		url: '/product/ret-variant',  
+		data:formData,
+		contentType: false,
+		cache:false,
+		processData:false,  
+		success: function(result)
+		{
+			toJSON =JSON.parse(result);
+			if(toJSON[0].success == '1')
+			{
+				$('#variant_table tbody').empty();
+				for(i= 0; i < toJSON[0].data.length; i++)
+				{
+					$('#variant_table tbody').append
+					(''+
+					'<tr id="row-"'+vKey+'>'+
+						'<td>'+selected+'</td>'+
+						'<td>'+toJSON[0].data[i].variant_name_value+'</td>'+
+						'<td><button class="btn btn-danger btn-xs">REMOVE</button</td>'+
+					'</tr>'
+					+'');					
+				}
+			}
+		},
+	   error: function(errResult) {
+			alert(errResult);
+	   }
+	});	
 }
 </script>
 @endsection

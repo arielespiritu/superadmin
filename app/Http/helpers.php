@@ -171,16 +171,16 @@ function getProductvariantsDescription($product_variant_id)
 						->where('product_variant.id','=',$product_variant_id)
 						->get();
 						 DB::disconnect();
-			if(count($productDescription) <= 0)
-			{
-				return '';
-			}
-			else
-			{
-				foreach($productDescription as $productcombo)
-				{ }
-				return 	$productcombo->variant_name.': '.$productcombo->variant_name_value;				 
-			}
+		if(count($productDescription) <= 0)
+		{
+			return '';
+		}
+		else
+		{
+			foreach($productDescription as $productcombo)
+			{ }
+			return 	$productcombo->variant_name.': '.$productcombo->variant_name_value;				 
+		}
 }
 function getStoreName($store_id)
 {
@@ -202,7 +202,6 @@ function imagePath($path)
 		return 'assets/img/nobanner.png';
 	}
 }
-
 function getStoreLogo($path)
 {
 	if(file_exists($path.'.png')){
@@ -212,7 +211,7 @@ function getStoreLogo($path)
 	}
 	elseif(file_exists($path.'.jpeg')){
 		return $path.'.jpeg';
-	}	
+	}
 	else{
 		return 'assets/img/nobanner.png';
 	}
