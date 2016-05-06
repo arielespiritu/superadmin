@@ -1,13 +1,10 @@
 @extends('admin.master')
-
 @section('title', 'SUPERadmin|Product')
-
 @section('head')
 	<!-- DataTables CSS -->
 	<link href="{{URL::asset('assets/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}" rel="stylesheet">
 	<link href="{{URL::asset('assets/bower_components/datatables-responsive/css/dataTables.responsive.css')}}" rel="stylesheet">
 @endsection
-
 @section('content')
 	<div id="page-wrapper">
 		<div class="container-fluid">
@@ -46,7 +43,6 @@
 						</tr>
 					</thead>
 					<tbody>
-					
 					@if(count($Product)<=0)
 					@else
 					@foreach($Product as $getProductInfo)
@@ -64,9 +60,9 @@
 									if($getcategory->id == $getProductInfo->sub_category_id )
 									{
 										$checkifHasCategory="true";
-											break;
+										break;
 									}
-								}								
+								}
 								if($checkifHasCategory == 'false')
 								{
 									array_push($errors,'Category Not Define');
@@ -79,9 +75,7 @@
 								{
 									array_push($errors,$checkifVariantUse);
 								}
-
 								?>
-
 								@if(count($errors) <= '0')
 									<b>No Problem</b>
 								@else
@@ -91,7 +85,6 @@
 								<b>Type:</b> {{getProductType($getProductInfo->getChildProduct)}}
 								<br>
 								<b>Last Update:</b> {{smartdate(strtotime($getProductInfo->updated_at))}}
-								
 							</td>
 							<td>
 								@if($getProductInfo->product_status == '9')
@@ -106,8 +99,8 @@
 								<a href="/product/variants/{{$getProductInfo->id}}" class="btn btn-success btn-xs">Variants</a>
 							</td>
 						</tr>
-					@endforeach	
-					@endif	
+					@endforeach
+					@endif
 					</tbody>
 				</table>
 			</div>

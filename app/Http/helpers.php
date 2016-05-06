@@ -105,7 +105,6 @@ function checkIfVariantDescriptionNoteUse($productArray,$variants_list)
 		foreach($getProductChild->getCombo as $getProductVariant)
 		{
 			 array_push($usedVariants,$getProductVariant->product_variant_id);
-			
 		}
 	}
 	$comparingResult =array_diff($settedVariants,$usedVariants);
@@ -121,7 +120,6 @@ function checkIfVariantDescriptionNoteUse($productArray,$variants_list)
 	{
 		return implode(',',$array_result).' NOT USE';
 	}
-	
 }
 function getVariantName($variant_id)
 {
@@ -173,16 +171,16 @@ function getProductvariantsDescription($product_variant_id)
 						->where('product_variant.id','=',$product_variant_id)
 						->get();
 						 DB::disconnect();
-			if(count($productDescription) <= 0)
-			{
-				return '';
-			}
-			else
-			{
-				foreach($productDescription as $productcombo)
-				{ }
-				return 	$productcombo->variant_name.': '.$productcombo->variant_name_value;				 
-			}
+		if(count($productDescription) <= 0)
+		{
+			return '';
+		}
+		else
+		{
+			foreach($productDescription as $productcombo)
+			{ }
+			return 	$productcombo->variant_name.': '.$productcombo->variant_name_value;				 
+		}
 }
 function getStoreName($store_id)
 {
@@ -204,7 +202,6 @@ function imagePath($path)
 		return 'assets/img/nobanner.png';
 	}
 }
-
 function getStoreLogo($path)
 {
 	if(checkExternalFile($path.'.png') == 200 ){
@@ -214,7 +211,7 @@ function getStoreLogo($path)
 	}
 	elseif(checkExternalFile($path.'.jpeg') == 200 ){
 		return $path.'.jpeg';
-	}	
+	}
 	else{
 		return 'http://homemallph.com/assets/img/nobanner.png';
 	}
