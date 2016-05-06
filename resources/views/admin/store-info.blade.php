@@ -20,6 +20,16 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="col-md-2">
+									<p>Logo</p>
+								</div>	
+								<div class="col-md-5">
+									<img id="logo-main" src="{{getStoreLogo('http://homemallph.com//assets/img/store/'.$store_info[0]->store_name.'/logo/'.$store_info[0]->id)}}" style="border:1px solid #d3d3d3; height:120px;">
+									</br>
+									</br>
+								</div>	
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-2">
 									<p>Store Name</p>
 								</div>	
 								<div class="col-md-5">
@@ -37,7 +47,7 @@
 									<p>Display Name</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="display_name" id="display_name" type="text" placeholder="Store Name" value="{{$store_info[0]->display_name}}" required>
+									<input class="form-control input-sm" name="display_name" id="display_name" type="text" placeholder="Store Name" value="{{$store_info[0]->display_name}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -46,7 +56,7 @@
 									<p>FB Link Page</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="store_fb_link" id="store_fb_link" type="text" placeholder="Store FB Link" value="{{$store_info[0]->store_fb_link}}" required>
+									<input class="form-control input-sm" name="store_fb_link" id="store_fb_link" type="text" placeholder="Store FB Link" value="{{$store_info[0]->store_fb_link}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -55,7 +65,7 @@
 									<p>Store Description</p>
 								</div>	
 								<div class="col-md-5">
-									<textarea rows="4" class="form-control input-sm  " placeholder="Store Description" name="store_decription" required>{{$store_info[0]->store_description}}</textarea>
+									<textarea rows="4" class="form-control input-sm  " placeholder="Store Description" name="store_decription" required readonly>{{$store_info[0]->store_description}}</textarea>
 									</br>
 								</div>	
 							</div>
@@ -64,7 +74,7 @@
 									<p>Store State</p>
 								</div>	
 								<div class="col-md-5">
-									<select class="form-control input-sm " id="city" name="city" value="{{$store_info[0]->store_city}}" required>
+									<select class="form-control input-sm " id="city" name="city" value="{{$store_info[0]->store_city}}" required readonly>
 										<option value="0">Select State</option>
 										@foreach($city as $city_list)
 											@if($city_list->id==$store_info[0]->store_city)
@@ -83,7 +93,7 @@
 								</div>	
 								<div class="col-md-5">
 								<input  id="sArea" type="hidden"  value="{{$store_info[0]->store_area}}" >
-									<select class="form-control input-sm " id="area" name="area" value="" required>
+									<select class="form-control input-sm " id="area" name="area" value="" required readonly>
 										<option></option>
 									</select>
 									</br>
@@ -98,7 +108,7 @@
 									<p>Merchant Name</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="merchant_name" id="merchant_name" type="text" placeholder="Merchant Name" value="{{$store_info[0]->store_owner->owner_name}}" required>
+									<input class="form-control input-sm" name="merchant_name" id="merchant_name" type="text" placeholder="Merchant Name" value="{{$store_info[0]->store_owner->owner_name}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -107,7 +117,7 @@
 									<p>Merchant Nick Name</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="merchant_nick_name" id="merchant_nick_name" type="text" placeholder="Nick Name" value="{{$store_info[0]->store_owner->owner_nick_name}}" required>
+									<input class="form-control input-sm" name="merchant_nick_name" id="merchant_nick_name" type="text" placeholder="Nick Name" value="{{$store_info[0]->store_owner->owner_nick_name}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -116,7 +126,7 @@
 									<p>Email</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="email" id="email" type="text" placeholder="Email" value="{{$store_info[0]->store_owner->owner_email}}" required>
+									<input class="form-control input-sm" name="email" id="email" type="text" placeholder="Email" value="{{$store_info[0]->store_owner->owner_email}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -126,7 +136,7 @@
 									<p>Mobile No</p>
 								</div>	
 								<div class="col-md-5">
-									<input class="form-control input-sm" name="mobile_no" id="mobile_no" type="text" placeholder="Mobile Number" value="{{$store_info[0]->store_owner->owner_mobile}}" required>
+									<input class="form-control input-sm" name="mobile_no" id="mobile_no" type="text" placeholder="Mobile Number" value="{{$store_info[0]->store_owner->owner_mobile}}" required readonly>
 									</br>
 								</div>	
 							</div>
@@ -135,7 +145,7 @@
 									<p>Store Address</p>
 								</div>	
 								<div class="col-md-5">
-									<textarea rows="4" class="form-control input-sm  " placeholder="Store Address" name="store_address" required>{{$store_info[0]->store_complete_address}}</textarea>
+									<textarea rows="4" class="form-control input-sm  " placeholder="Store Address" name="store_address" required readonly>{{$store_info[0]->store_complete_address}}</textarea>
 									</br>
 								</div>	
 							</div>
@@ -146,6 +156,36 @@
 							<div class="col-md-12">
 									<center><p>About Store</p></center>
 									<textarea id="txtEditor" name="description">{{$store_info[0]->store_about}}</textarea> 
+									</br>
+							</div>
+						</div>
+						
+						<h4>Terms and Conditions</h4>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+									<center><p>About Store</p></center>
+									<textarea id="txtEditor2" name="description2">{{$store_info[0]->store_about}}</textarea> 
+									</br>
+							</div>
+						</div>
+						
+						<h4>Privacy and Policies</h4>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+									<center><p>About Store</p></center>
+									<textarea id="txtEditor3" name="description3">{{$store_info[0]->store_about}}</textarea> 
+									</br>
+							</div>
+						</div>
+						
+						<h4>FAQS</h4>
+						</br>
+						<div class="row">
+							<div class="col-md-12">
+									<center><p>About Store</p></center>
+									<textarea id="txtEditor4" name="description4">{{$store_info[0]->store_about}}</textarea> 
 									</br>
 							</div>
 						</div>
@@ -203,6 +243,10 @@
 	$(document).ready(function() {
 		$("#txtEditor").Editor();
 		$("#txtEditor").Editor('setText','{!! $store_info[0]->store_about !!}');
+		
+		$("#txtEditor2").Editor();
+		$("#txtEditor3").Editor();
+		$("#txtEditor4").Editor();
         var cid = $('#city').val();
 		var area = $('#sArea').val();
 		getArea(cid,area);

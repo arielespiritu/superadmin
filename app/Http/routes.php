@@ -29,6 +29,8 @@ Route::get('/', array('as' => 'dashboard','uses' => 'DashboardController@getDash
 
 Route::get('/store', array('as' => 'store','uses' => 'StoreController@getStores'));
 Route::get('/store/{id}', array('as' => 'store-info','uses' => 'StoreController@getStoresInfo'));
+Route::post('/store/set-store-status/{id}', array('as' => 'set-store-status','uses' => 'StoreController@setStoreStatus'));
+
 Route::get('/location/get-city-area', 'GenericRequestController@getArea');
 
 Route::get('/product','ProductController@showProduct');

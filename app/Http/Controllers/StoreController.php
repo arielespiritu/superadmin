@@ -64,4 +64,53 @@ class StoreController extends Controller {
 		->with('city',$city);
 	}	
 	
+	public function setStoreStatus($sid,Request $request)
+	{
+		if ($request->ajax()) {
+			$id = Auth::user()->admin_user->id;
+			$user = AdminUser::where('id','=',$id)->get();
+			$store_info = Store::with('indicator')->where('id','=',$sid)->get();
+			if(count($store_info)==0){
+					return Response::json(array(
+						'success' => false,
+						'message' => 'Error Occured.',
+						'data' => null 
+					)); 
+			}
+			
+			try{
+			
+				$data = $request->all();
+				$rules = array(
+					'sid' => 'exists:store_tbl,id',
+					'status' => 'required|max:15'
+				);
+
+			$validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+				return Response::json(array(
+						'success' => false,
+						'message' => 'Error Occured.'
+				));
+			}
+			$store = Store::find($data['sid']);
+			$store->store_status = $data['status'];
+			$store->touch();
+			$store->save();
+			return Response::json(array(
+					'success' => true,
+					'message' => 'Update Success'
+				)); 
+				
+			}catch(\Exception $e){
+				return Response::json(array(
+						'success' => false,
+						'message' => 'Error Occured.'
+				));
+			}
+		} else{
+			return redirect('/store');
+		}	
+	}
+	
 }

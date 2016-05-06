@@ -207,16 +207,28 @@ function imagePath($path)
 
 function getStoreLogo($path)
 {
-	if(file_exists($path.'.png')){
+	if(checkExternalFile($path.'.png') == 200 ){
 		return $path.'.png';
-	}elseif(file_exists($path.'.jpg')){
+	}elseif(checkExternalFile($path.'.jpg') == 200 ){
 		return $path.'.jpg';
 	}
-	elseif(file_exists($path.'.jpeg')){
+	elseif(checkExternalFile($path.'.jpeg') == 200 ){
 		return $path.'.jpeg';
 	}	
 	else{
-		return 'assets/img/nobanner.png';
+		return 'http://homemallph.com/assets/img/nobanner.png';
 	}
 }
+
+function checkExternalFile($url)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_exec($ch);
+    $retCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    return $retCode;
+}
+
+//$fileExists = checkExternalFile("http://example.com/your/url/here.jpg");
 ?>
